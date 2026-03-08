@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VALORTIER – Community Meta Tierlist</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">VALOR<span>TIER</span></div>
+      <div class="patch-badge">Patch <span>10.06</span> — Community Meta</div>
+    </header>
+
+    <div class="hero">
+      <h1>WHO'S <em>OP</em>,<br />WHO'S <em>TRASH</em></h1>
+      <p>Voted by the community · Updates in real time</p>
+      <div class="vote-counter">
+        <div class="dot"></div>
+        <span id="total-votes">...</span> votes cast
+      </div>
+    </div>
+
+    <main id="tierlist">
+      <!-- Wird per JavaScript befüllt -->
+      <div
+        style="
+          text-align: center;
+          padding: 60px;
+          color: #6b7280;
+          font-family: &quot;Barlow Condensed&quot;, sans-serif;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        "
+      >
+        Verbinde mit Firebase...
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Not affiliated with Riot Games · <span>Community driven</span> · Votes
+        reset each patch
+      </p>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <!--
+    type="module" ist wichtig für Firebase imports!
+    Bedeutet auch: vote() Funktion ist nicht mehr global.
+    Deshalb onclick="vote(...)" funktioniert nicht mehr direkt –
+    wird in script.js über window.vote gelöst.
+  -->
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

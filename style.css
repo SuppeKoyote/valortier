@@ -1,0 +1,452 @@
+/* =============================================
+   VALORTIER – style.css
+   =============================================
+   Struktur:
+   1. CSS Variablen (Farben)
+   2. Reset & Body
+   3. Header
+   4. Hero Section
+   5. Tierlist & Tier Rows
+   6. Agent Cards
+   7. Vote Buttons
+   8. Toast Notification
+   9. Footer
+   10. Responsive (Mobile)
+============================================= */
+
+/* ── 1. CSS Variablen ── */
+:root {
+  --red: #ff4655;
+  --red-dark: #c0392b;
+  --bg: #0f1013; /* Hintergrund dunkelst */
+  --bg2: #16181d; /* Hintergrund mittel */
+  --bg3: #1e2028; /* Hintergrund hell */
+  --border: #2a2d38; /* Rahmenfarbe */
+  --text: #e8eaf0; /* Haupttext */
+  --muted: #6b7280; /* Gedämpfter Text */
+
+  /* Tier-Farben */
+  --s: #f5c518; /* Gold */
+  --a: #4ade80; /* Grün */
+  --b: #60a5fa; /* Blau */
+  --c: #f97316; /* Orange */
+  --d: #ef4444; /* Rot */
+}
+
+/* ── 2. Reset & Body ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Barlow", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Hintergrund-Gitter-Textur */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      rgba(255, 70, 85, 0.12) 0%,
+      transparent 60%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(255, 255, 255, 0.01) 40px,
+      rgba(255, 255, 255, 0.01) 41px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(255, 255, 255, 0.01) 40px,
+      rgba(255, 255, 255, 0.01) 41px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 3. Header ── */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(15, 16, 19, 0.8);
+  backdrop-filter: blur(12px); /* Glaseffekt */
+}
+
+.logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.logo span {
+  color: var(--red); /* "TIER" in rot */
+}
+
+.patch-badge {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.patch-badge span {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ── 4. Hero Section ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+.hero h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem); /* Skaliert mit Bildschirmbreite */
+  letter-spacing: 0.05em;
+  line-height: 0.9;
+  color: var(--text);
+}
+
+.hero h1 em {
+  color: var(--red);
+  font-style: normal;
+}
+
+.hero p {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Live-Vote-Zähler */
+.vote-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 8px 20px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Grüner blinkender Punkt */
+.vote-counter .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--a);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.5);
+  }
+}
+
+/* ── 5. Tierlist & Tier Rows ── */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+
+/* Eine Tier-Zeile (z.B. S-Tier) */
+.tier-section {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.tier-section:hover {
+  border-color: rgba(255, 70, 85, 0.3);
+}
+
+/* Das farbige "S / A / B / C / D" Label links */
+.tier-label {
+  width: 64px;
+  min-width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+/* Farben je nach Tier */
+.tier-label.s {
+  background: rgba(245, 197, 24, 0.15);
+  color: var(--s);
+  border-right: 3px solid var(--s);
+}
+.tier-label.a {
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--a);
+  border-right: 3px solid var(--a);
+}
+.tier-label.b {
+  background: rgba(96, 165, 250, 0.12);
+  color: var(--b);
+  border-right: 3px solid var(--b);
+}
+.tier-label.c {
+  background: rgba(249, 115, 22, 0.12);
+  color: var(--c);
+  border-right: 3px solid var(--c);
+}
+.tier-label.d {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--d);
+  border-right: 3px solid var(--d);
+}
+
+/* Container für die Agent-Karten innerhalb einer Tier */
+.tier-agents {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg2);
+  align-items: center;
+}
+
+/* ── 6. Agent Cards ── */
+.agent-card {
+  position: relative;
+  width: 90px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+  user-select: none;
+}
+
+.agent-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--red);
+  box-shadow: 0 8px 24px rgba(255, 70, 85, 0.2);
+  z-index: 5;
+}
+
+.agent-card:active {
+  transform: translateY(0);
+}
+
+.agent-img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.85);
+  transition: filter 0.2s;
+}
+
+.agent-card:hover .agent-img {
+  filter: saturate(1.1);
+}
+
+.agent-info {
+  padding: 6px 8px 8px;
+  text-align: center;
+}
+
+.agent-name {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agent-role {
+  font-size: 0.62rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+/* Score-Badge oben rechts auf der Karte */
+.vote-score {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2px 5px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.score-positive {
+  color: var(--a);
+} /* Grün wenn positiv */
+.score-negative {
+  color: var(--d);
+} /* Rot wenn negativ */
+
+/* ── 7. Vote Buttons ── */
+.vote-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.vote-btn {
+  flex: 1;
+  padding: 3px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: "Barlow", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover-States */
+.vote-btn.up:hover {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: var(--a);
+  color: var(--a);
+}
+.vote-btn.down:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: var(--d);
+  color: var(--d);
+}
+
+/* Wenn man selbst gevotet hat */
+.vote-btn.voted-up {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: var(--a);
+  color: var(--a);
+}
+.vote-btn.voted-down {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--d);
+  color: var(--d);
+}
+
+/* ── 8. Toast Notification ── */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px); /* Versteckt unten */
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--red);
+  padding: 12px 24px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+/* Sichtbar wenn .show Klasse gesetzt ist */
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── 9. Footer ── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 30px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+footer span {
+  color: var(--red);
+}
+
+/* ── 10. Responsive (Mobile) ── */
+@media (max-width: 600px) {
+  header {
+    padding: 16px 20px;
+  }
+  .logo {
+    font-size: 1.5rem;
+  }
+  .agent-card {
+    width: 75px;
+  }
+  .agent-img {
+    height: 75px;
+  }
+  .tier-label {
+    width: 48px;
+    min-width: 48px;
+    font-size: 1.8rem;
+  }
+}
