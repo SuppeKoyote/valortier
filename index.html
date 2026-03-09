@@ -13,7 +13,16 @@
   <body>
     <header>
       <div class="logo">VALOR<span>TIER</span></div>
-      <div class="patch-badge">Patch <span>10.06</span> — Community Meta</div>
+      <div class="header-right">
+        <div class="patch-badge">Patch <span>10.06</span> — Community Meta</div>
+        <button
+          class="reset-btn"
+          onclick="patchReset()"
+          title="Admin only – resets all scores for current tab to 0"
+        >
+          ⟳ Patch Reset
+        </button>
+      </div>
     </header>
 
     <div class="hero">
@@ -21,12 +30,27 @@
       <p>Voted by the community · Updates in real time</p>
       <div class="vote-counter">
         <div class="dot"></div>
-        <span id="total-votes">...</span> votes cast
+        <span id="total-votes">0</span> community votes
       </div>
     </div>
 
+    <div class="tabs">
+      <button
+        class="tab-btn active"
+        data-tab="agents"
+        onclick="switchTab('agents')"
+      >
+        ⚔ Agents
+      </button>
+      <button class="tab-btn" data-tab="maps" onclick="switchTab('maps')">
+        🗺 Maps
+      </button>
+      <button class="tab-btn" data-tab="weapons" onclick="switchTab('weapons')">
+        🔫 Weapons
+      </button>
+    </div>
+
     <main id="tierlist">
-      <!-- Wird per JavaScript befüllt -->
       <div
         style="
           text-align: center;
@@ -37,7 +61,7 @@
           text-transform: uppercase;
         "
       >
-        Verbinde mit Firebase...
+        Loading...
       </div>
     </main>
 
@@ -50,12 +74,6 @@
 
     <div class="toast" id="toast"></div>
 
-    <!--
-    type="module" ist wichtig für Firebase imports!
-    Bedeutet auch: vote() Funktion ist nicht mehr global.
-    Deshalb onclick="vote(...)" funktioniert nicht mehr direkt –
-    wird in script.js über window.vote gelöst.
-  -->
     <script type="module" src="script.js"></script>
   </body>
 </html>
